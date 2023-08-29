@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Music</title>
+</head>
+<body>
+  
+  <header>
+    <nav>
+      <img src="img/lo.jpg" alt="Logo"> <!-- Replace with your logo image -->
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about">About Us</a></li>
+        <li><a href="#music">Music pageue</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="platform2-icons">
+    <a href="#"><img src="img/youtube .png" alt="Spotify"></a>
+    <a href="#"><img src="img/soundcloud.png" alt="Apple Music"></a>
+    <a href="#"><img src="img/spotify.png" alt="YouTube Music"></a>
+    <a href="#"><img src="img/itunes.png" alt="YouTube Music"></a>
+
+  </div>
+  
+
+  <section id="music">
+    <h2 style="text-align: center; margin-top: 20px;">Music</h2>
+    <div class="music-page">
+      <div class="music-card">
+        <img src="img/alb1.jpg" alt="Album 1">
+        <div class="album-overlay">
+          <button class="album-button" onclick="openModal('album1')">View Videos</button>
+        </div>
+      </div>
+      <div class="music-card">
+        <img src="img/alb2.jpg" alt="Album 2">
+        <div class="album-overlay">
+          <button class="album-button" onclick="openModal('album2')">View Videos</button>
+        </div>
+      </div>
+      <div class="music-card">
+        <img src="img/alb3.jpg" alt="Album 2">
+        <div class="album-overlay">
+          <button class="album-button" onclick="openModal('album2')">View Videos</button>
+        </div>
+      </div>
+      <div class="music-card">
+        <img src="img/alb4.jpg" alt="Album 2">
+        <div class="album-overlay">
+          <button class="album-button" onclick="openModal('album2')">View Videos</button>
+        </div>
+      </div>
+      <div class="music-card">
+        <img src="img/alb5.jpg" alt="Album 2">
+        <div class="album-overlay">
+          <button class="album-button" onclick="openModal('album2')">View Videos</button>
+        </div>
+      </div>
+      <div class="music-card">
+        <img src="img/lo.jpg" alt="Album 2">
+        <div class="album-overlay">
+          <button class="album-button" onclick="openModal('album2')">View Videos</button>
+        </div>
+      </div>
+      <!-- Add more album cards... -->
+    </div>
+  </section>
+
+  <div class="modal" id="videoModal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <h3 style="margin-bottom: 10px;">Album Videos</h3>
+      <ul class="video-list">
+        <li class="video-list-item" onclick="loadVideo('video_id1')">Video 1</li>
+        <li class="video-list-item" onclick="loadVideo('video_id2')">Video 2</li>
+        <!-- Add more videos... -->
+      </ul>
+      <div id="videoPlayer"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      
+      <div class="footer-social">
+        <a href="#"><img src="img/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="img/twitter.png" alt="Twitter"></a>
+        <a href="#"><img src="img/instagram.png" alt="Instagram"></a>
+      </div>
+      <div class="footer-platforms">
+        <a href="#"><img src="img/youtube .png" alt="YouTube"></a>
+        <a href="#"><img src="img/soundcloud.png" alt="SoundCloud Music"></a>
+        <a href="#"><img src="img/spotify.png" alt="Spotify Music"></a>
+        <a href="#"><img src="img/itunes.png" alt="Apple Music"></a>
+
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2023 Your Music Website. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    let currentVideoId = '';
+
+    function openModal(albumId) {
+      const modal = document.getElementById('videoModal');
+      currentVideoId = albumId;
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('videoModal');
+      currentVideoId = '';
+      modal.style.display = 'none';
+      document.getElementById('videoPlayer').innerHTML = '';
+    }
+
+    function loadVideo(videoId) {
+      const videoPlayer = document.getElementById('videoPlayer');
+      videoPlayer.innerHTML = `
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+      `;
+    }
+
+    
+  </script>
+</body>
+</html>
