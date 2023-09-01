@@ -20,14 +20,20 @@
     </nav>
   </header>
 
-  <!-- Hero section with slading images -->
-  <section id="hero">
-    <div class="hero">
-      <img src="img/pogo.jpg" alt="Image 1">
-      <img src="img/po.jpg" alt="Image 2">
-      <img src="img/pogo.jpg" alt="Image 3">
+  <!-- Hero section with a video -->
+<section id="hero">
+  <div class="hero">
+    <video autoplay loop muted>
+      <source src="img/video.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="text-overlay">
+      <p id="sentence1"></p>
+      <p id="sentence2"></p>
+      <button id="actionButton">Click Me</button>
     </div>
-  </section>
+  </div>
+</section>
 
     <!-- About Us Section -->
   <section id="about" class="about-us">
@@ -111,7 +117,7 @@
       </div>
     </div>
     <div class="music-button-container">
-      <a class="music-button" href="#music"> 
+      <a class="music-button" href="music.html"> 
         <span class="play-icon">&#9654;</span> Explore More</a>
     </div>    
   </section>
@@ -230,19 +236,26 @@
   </footer>
 
   <script>
-    const hero = document.querySelector('.hero');
-    const images = hero.querySelectorAll('img');
-    let currentIndex = 0;
+   // Get references to HTML elements
+const sentence1 = document.getElementById("sentence1");
+const sentence2 = document.getElementById("sentence2");
+const actionButton = document.getElementById("actionButton");
 
-    function slideImages() {
-      currentIndex = (currentIndex + 1) % images.length;
-      const translateX = -currentIndex * 100;
-      images.forEach(image => {
-        image.style.transform = `translateX(${translateX}%)`;
-      });
-    }
+// Define your sentences and button text
+const sentence1Text = "Welcome to Our Music World";
+const sentence2Text = "Discover the Soundtrack";
+const buttonText = "Click Me";
 
-    setInterval(slideImages, 3000); // Change images every 3 seconds
+// Set content for the sentences and button
+sentence1.textContent = sentence1Text;
+sentence2.textContent = sentence2Text;
+actionButton.textContent = buttonText;
+
+// Apply animations using CSS classes
+sentence1.classList.add("animate-text-reveal");
+sentence2.classList.add("animate-text-reveal-delay-1");
+actionButton.classList.add("animate-text-reveal-delay-2");
+
 
     
     
