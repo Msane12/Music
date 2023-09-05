@@ -46,27 +46,27 @@
         </div>
       </div>
       <div class="music-card">
-        <img src="img/alb3.jpg" alt="Album 2">
+        <img src="img/alb3.jpg" alt="Album 3">
         <div class="album-overlay">
-          <button class="album-button" onclick="openModal('album2')">View Videos</button>
+          <button class="album-button" onclick="openModal('album3')">View Videos</button>
         </div>
       </div>
       <div class="music-card">
-        <img src="img/alb4.jpg" alt="Album 2">
+        <img src="img/alb4.jpg" alt="Album 4">
         <div class="album-overlay">
-          <button class="album-button" onclick="openModal('album2')">View Videos</button>
+          <button class="album-button" onclick="openModal('album4')">View Videos</button>
         </div>
       </div>
       <div class="music-card">
-        <img src="img/alb5.jpg" alt="Album 2">
+        <img src="img/alb5.jpg" alt="Album 5">
         <div class="album-overlay">
-          <button class="album-button" onclick="openModal('album2')">View Videos</button>
+          <button class="album-button" onclick="openModal('album5')">View Videos</button>
         </div>
       </div>
       <div class="music-card">
-        <img src="img/lo.jpg" alt="Album 2">
+        <img src="img/lo.jpg" alt="Album 6">
         <div class="album-overlay">
-          <button class="album-button" onclick="openModal('album2')">View Videos</button>
+          <button class="album-button" onclick="openModal('album6')">View Videos</button>
         </div>
       </div>
       <!-- Add more album cards... -->
@@ -76,13 +76,8 @@
   <div class="modal" id="videoModal">
     <div class="modal-content">
       <span class="close-button" onclick="closeModal()">&times;</span>
-      <h3 style="margin-bottom: 10px;">Album Videos</h3>
-      <ul class="video-list">
-        <li class="video-list-item" onclick="loadVideo('video_id1')">Video 1</li>
-        <li class="video-list-item" onclick="loadVideo('video_id2')">Video 2</li>
-        <!-- Add more videos... -->
-      </ul>
-      <div id="videoPlayer"></div>
+      <div class="video-frame" id="videoPlayer"></div>
+      <ul class="video-list" id="videoList"></ul>
     </div>
   </div>
 
@@ -108,19 +103,61 @@
   </footer>
 
   <script>
-    let currentVideoId = '';
+    // Replace 'YOUR_API_KEY' with your YouTube Data API key
+    const apiKey = 'AIzaSyD76xaH0oddFrF8cbYN2ENwj45JECdfnoM';
+
+    // Define YouTube playlist IDs for each album
+    const albumPlaylists = {
+      album1: 'OLAK5uy_mvd_vb37Nb0HR-LnZhGnpY01EEFOKa0RE',
+      album2: '',
+      album3: 'OLAK5uy_n6x3_PmdxgUM6rSK2t-Lxv1WY5wwDqn9E',
+      album4: 'OLAK5uy_m89LY3iKrp8eB1teaFAv7ZQaHubPsLgMA',
+      album5: 'OLAK5uy_kCS_ggl1zKkbyOwzqlArndJi7Tlq4qizU',
+      album6: 'OLAK5uy_lTkYT-JKwddzCP79CCa5li0BDea74e0Kw',
+      // Add more album IDs and playlist IDs as needed...
+    };
+
+    let currentAlbumId = '';
 
     function openModal(albumId) {
       const modal = document.getElementById('videoModal');
-      currentVideoId = albumId;
+      currentAlbumId = albumId;
+      fetchAndPopulatePlaylist(currentAlbumId);
       modal.style.display = 'block';
     }
 
     function closeModal() {
       const modal = document.getElementById('videoModal');
-      currentVideoId = '';
+      currentAlbumId = '';
       modal.style.display = 'none';
       document.getElementById('videoPlayer').innerHTML = '';
+    }
+
+    function fetchAndPopulatePlaylist(albumId) {
+      const playlistId = albumPlaylists[albumId];
+      const maxResults = 10;
+
+      const playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${maxResults}&playlistId=${playlistId}&key=${apiKey}`;
+
+      fetch(playlistUrl)
+        .then(response => response.json())
+        .then(data => {
+          const videoList = document.querySelector('.video-list');
+          videoList.innerHTML = '';
+
+          data.items.forEach(item => {
+            const videoId = item.snippet.resourceId.videoId;
+            const videoTitle = item.snippet.title;
+
+            const videoItem = document.createElement('li');
+            videoItem.className = 'video-list-item';
+            videoItem.textContent = videoTitle;
+            videoItem.onclick = () => loadVideo(videoId);
+
+            videoList.appendChild(videoItem);
+          });
+        })
+        .catch(error => console.error('Error fetching playlist videos:', error));
     }
 
     function loadVideo(videoId) {
@@ -129,8 +166,6 @@
         <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
       `;
     }
-
-    
   </script>
 </body>
 </html>
